@@ -32,3 +32,7 @@ h1.main {
 span.main{
 color: #007FFF;
 }
+div.landing-page{
+    position: relative;
+    animation: slideInFromBottom 0.5s ease-out;
+}

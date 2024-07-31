@@ -3,13 +3,17 @@ import laravel from 'laravel-vite-plugin';
 
 export default defineConfig({
 
-server :{
-    host:"0.0.0.0",
-    fs:{
-        strict: false,
-    },
-},
 
+
+
+    server:{
+host:"192.168.18.69",
+   
+fs:{
+    strict:false,
+},
+}
+,
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js'],

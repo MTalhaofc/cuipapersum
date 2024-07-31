@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PastPaperController;
+use App\Http\Controllers\FileController;
+
 use App\Http\Controllers\DepartmentController;
 
 
@@ -20,7 +22,7 @@ Route::group(['middleware' => 'guest'], function () {
 Route::group(['middleware' => 'auth'], function () {
     Route::get('home', [AuthController::class, 'home'])->name('home');
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('pastpapers/createpaper', [PastPaperController::class, 'create'])->name('pastpapers.create');
+    Route::get('pastpapers/createpaper', [PastPaperController::class, 'create'])->name('pastpapers.createpaper');
     Route::post('pastpapers', [PastPaperController::class, 'store'])->name('pastpapers.store');
     Route::get('pastpapers/{pastpaper}/edit', [PastPaperController::class, 'edit'])->name('pastpapers.edit');
     Route::put('pastpapers/{pastpaper}', [PastPaperController::class, 'update'])->name('pastpapers.update');
@@ -38,5 +40,7 @@ Route::resource('pastpapers', PastPaperController::class);
 
 
 Route::get('/departments/{department}', [DepartmentController::class, 'show'])->name('departments.show');
+Route::get('/pastpapersearch', [PastPaperController::class, 'search'])->name('pastpapersshow');
 
 Route::get('/pastpapers/department/{department}', [PastPaperController::class, 'indexByDepartment'])->name('pastpapers.indexbydepartment');
+Route::get('/download', [FileController::class, 'download'])->name('download');

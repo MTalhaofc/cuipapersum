@@ -1,23 +1,31 @@
-<!-- resources/views/pastpapers/createpaper.blade.php -->
-
 @extends('layouts.app')
 
 @section('content')
     <div class="container mx-auto mt-10 p-5 bg-white rounded-lg shadow-md">
         <h1 class="text-2xl font-bold mb-5">Upload Past Paper</h1>
+        @if ($errors->any())
+            <div class="bg-red-100 border border-red-400 text-red-700 p-4 rounded relative" role="alert">
+                <strong class="font-bold">Whoops!</strong>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <form action="{{ route('pastpapers.store') }}" method="POST" enctype="multipart/form-data" class="space-y-5">
             @csrf
             <div>
-                <label for="title" class="block text-sm font-medium text-gray-700">Title:</label>
-                <input type="text" name="title" id="title" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                <label for="subject" class="block text-sm font-medium text-gray-700">Subject:</label>
+                <input type="text" name="subject" id="subject" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
             </div>
             <div>
                 <label for="coursecode" class="block text-sm font-medium text-gray-700">Course Code:</label>
                 <input type="text" name="coursecode" id="coursecode" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
             </div>
             <div>
-                <label for="teachers" class="block text-sm font-medium text-gray-700">Teachers:</label>
-                <input type="text" name="teachers" id="teachers" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                <label for="teacher" class="block text-sm font-medium text-gray-700">Teacher:</label>
+                <input type="text" name="teacher" id="teacher" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
             </div>
             <div>
                 <span class="block text-sm font-medium text-gray-700">Department:</span>
@@ -43,8 +51,14 @@
                 </div>
             </div>
             <div>
-                <label for="subject" class="block text-sm font-medium text-gray-700">Subject:</label>
-                <textarea name="subject" id="subject" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
+                <label for="papertype" class="block text-sm font-medium text-gray-700">Paper Type:</label>
+                <input type="text" name="papertype" id="papertype" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+              
+            </div>
+            <div>
+                <label for="papertime" class="block text-sm font-medium text-gray-700">Paper Time:</label>
+                <input type="text" name="papertime" id="papertime" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+              
             </div>
             <div>
                 <label for="files" class="block text-sm font-medium text-gray-700">Files:</label>

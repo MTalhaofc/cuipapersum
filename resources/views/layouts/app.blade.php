@@ -8,6 +8,10 @@
     @vite('resources/css/app.css')
 
     <link rel="icon" type="svg" class="h-1/2" href="{{ asset('assets/Browser_logo_cuipapersum.svg') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <script src="https://kit.fontawesome.com/e28e3997b3.js" crossorigin="anonymous"></script>
 
 </head>
 <body class="min-h-screen" >
@@ -17,11 +21,13 @@
                 <a href="{{route('landing')}}">
                 <img class="ml-3 mt-1 mb-2 h-6 md:h-8 " src="{{ asset('assets/Logo_cuipapersum.svg') }}" alt="Logo">
             </a>
+          
+
             </div>
             <div class="flex items-center space-x-4 mr-4">
                 @if (Auth::check())
                     <a href="{{ route('logout') }}">Logout</a>
-                    <a href="{{ route('pastpapers.create') }}">Add New Paper</a>
+                    <a href="{{ route('pastpapers.createpaper') }}">Add New Paper</a>
                 @else
                     {{-- <a href="{{ route('login') }}">Login</a>
                     <a href="{{ route('register') }}">Register</a> --}}
@@ -45,9 +51,7 @@
 @yield('content')
 
 <!--Footer container-->
-<footer
-
-  class="flex flex-col bottom-0 mt-auto bg-zinc-50 text-surface dark:bg-neutral-900 dark:text-white">
+<footer class="flex flex-col bottom-0 mt-auto  text-surface bg-neutral-900 text-white flex-shrink-0">
   <div class="flex flex-row">
     <div>
       <img class="ml-4" src="{{ asset('assets/Logo_cuipapersum_white.svg') }}" alt="Logo">

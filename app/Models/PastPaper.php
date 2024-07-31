@@ -11,11 +11,12 @@ class PastPaper extends Model
     use HasFactory;
     protected $fillable = [
         'user_id',
-        'title',
+        'subject',
         'coursecode',
-        'teachers',
+        'teacher',
         'department',
-        'subject'
+        'papertype',
+        'papertime'
         
     ];
     public function images()

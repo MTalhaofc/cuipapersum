@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -14,11 +15,12 @@ return new class extends Migration
         Schema::create('past_papers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('title'); //same as subject
+            $table->string('subject'); //same as subject
             $table->string('coursecode');
-            $table->string('teachers');
+            $table->string('teacher');
             $table->string('department');
-            $table->text('subject')->nullable();
+            $table->string('papertype');
+            $table->string('papertime');
             $table->timestamps();
         });
     }

@@ -33,21 +33,23 @@ class PastPaperController extends Controller
     
         public function store(Request $request) {
             $request->validate([
-                'title' => 'required|string|max:255',
+                'subject' => 'required|string|max:255',
                 'coursecode' => 'required|string|max:255',
-                'teachers' => 'required|string|max:255',
+                'teacher' => 'required|string|max:255',
                 'department' => 'required|string|max:255',
-                'subject' => 'nullable|string',
+                'papertype' => 'required|string|max:255',
+                'papertime' => 'required|string|max:255',
                 'files.*' => 'required|file|mimes:pdf,jpg,jpeg,png',
             ]);
     
             $pastPaper = PastPaper::create([
                 'user_id' => auth()->id(),
-                'title' => $request->title,
-                'coursecode' => $request->coursecode,
-                'teachers' => $request->teachers,
-                'department' => $request->department,
                 'subject' => $request->subject,
+                'coursecode' => $request->coursecode,
+                'teacher' => $request->teacher,
+                'department' => $request->department,
+                'papertype' => $request->papertype,
+                'papertime' => $request->papertime,
             ]);
     
             if ($request->hasFile('files')) {
@@ -57,16 +59,16 @@ class PastPaperController extends Controller
                 }
             }
     
-            return redirect()->route('landing')->with('success', 'Past paper uploaded successfully!');
+            return redirect()->route('home')->with('success', 'Past paper uploaded successfully!');
         }
     
         // ... other methods ...
     
     
 
-    public function show(PastPaper $pastpaper) {
-        return view('pastpapers.show', compact('pastpaper'));
-    }
+        public function show(PastPaper $pastpaper) {
+            return view('pastpapers.show', compact('pastpaper'));
+        }
 
     public function edit(PastPaper $pastpaper) {
         if (Auth::id() !== $pastpaper->user_id) {
@@ -81,24 +83,27 @@ class PastPaperController extends Controller
         }
     
         $request->validate([
-            'title' => 'required|string|max:255',
+            'subject' => 'required|string|max:255',
             'coursecode' => 'required|string|max:255',
-            'teachers' => 'required|string|max:255',
+            'teacher' => 'required|string|max:255',
             'department' => 'required|string|max:255',
-            'subject' => 'nullable|string',
+            'papertype' => 'required|string|max:255',
+            'papertime' => 'required|string|max:255',
             'images.*' => 'nullable|file|mimes:jpg,jpeg,png',
         ]);
     
-        // Update past paper details
+        
         $pastpaper->update([
-            'title' => $request->title,
-            'coursecode' => $request->coursecode,
-            'teachers' => $request->teachers,
-            'department' => $request->department,
-            'subject' => $request->subject,
+           
+                'subject' => $request->subject,
+                'coursecode' => $request->coursecode,
+                'teacher' => $request->teacher,
+                'department' => $request->department,
+                'papertype' => $request->papertype,
+                'papertime' => $request->papertime,
         ]);
     
-        // Handle new image uploads
+        
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $file) {
                 $path = $file->store('pastpapers', 'public');
@@ -106,7 +111,7 @@ class PastPaperController extends Controller
             }
         }
     
-        return redirect()->route('landing')->with('success', 'Past paper updated successfully!');
+        return redirect()->route('home')->with('success', 'Past paper updated successfully!');
     }
     
 
@@ -122,7 +127,7 @@ class PastPaperController extends Controller
 
         $pastpaper->delete();
 
-        return redirect()->route('landing')->with('success', 'Past paper deleted successfully!');
+        return redirect()->route('home')->with('success', 'Past paper deleted successfully!');
     }
 
     public function downloadImage($imageId) {
@@ -148,4 +153,33 @@ public function indexByDepartment($department)
 
     return view('pastpapers.indexbydepartment', compact('pastPapers', 'department'));
 }
+
+public function search(Request $request)
+{
+    $pastPapers = PastPaper::query();
+
+    if ($request->ajax()) {
+        $department = $request->input('department');
+
+        $data = $pastPapers
+            ->where('department', $department) // Filter by department
+            ->where('Subject', 'LIKE', '%' . $request->search . '%')
+            ->get()
+            ->map(function ($paper) {
+                // Add the view URL to each paper
+                $paper->url = route('pastpapers.show', $paper);
+                return $paper;
+            });
+
+        return response()->json($data);
+    } else {
+        $data = $pastPapers->get();
+        return view('pastpapers.show', compact('data'));
+    }
+}
+
+
+
+
+
 }
