@@ -61,9 +61,12 @@
     </div>
   
     <div class="flex flex-row mt-2 ml-auto mr-4">
-      <h4 class="ml-4 mt-1 hidden md:block">
+      <div class="flex flex-col">
+      <h6 class="text-xs" >Developed & Maintained by</h6>
+      <h6 class="text- hidden md:block">
           Muhammad Talha 
-      </h4>
+      </h6>
+    </div>
       <img class="ml-2  hidden md:block h-8" src="{{ asset('assets/developer_image.png') }}" alt="Logo">
     </div>
   </div>
